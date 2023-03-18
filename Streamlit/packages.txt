@@ -1,4 +1,4 @@
-
+opencv-python
 sqlalchemy
 passlib
 bcrypt
@@ -11,7 +11,7 @@ gpy
 matplotlib
 scipy
 google
-opencv-contrib-python-headless==4.5.3.56
+#opencv-contrib-python-headless==4.5.3.56
 scikit-learn
 colour-science
 ipywidgets
