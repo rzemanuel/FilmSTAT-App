@@ -1,4 +1,4 @@
-opencv-python
+
 sqlalchemy
 passlib
 bcrypt
