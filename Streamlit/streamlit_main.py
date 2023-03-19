@@ -370,12 +370,12 @@ def show_images_page():
 
         images = get_images_cached(s_t == 'Source', st.session_state['project_id'], st.session_state['token'])
 
-        options = np.arange(len(images))
+        options = np.arange(len([images]))
         img_ind = st.selectbox("Select image", options)
         if st.sidebar.button("reset saved coordinates", key= "RESET",):
             st.session_state[f"{s_t}_coords"] = []
 
-        selected_image = images[img_ind]
+        selected_image = [images][img_ind]
         if selected_image.dtype != np.float32:
             bitdepth = selected_image.dtype.itemsize * 8
             selected_image = selected_image/2**bitdepth
@@ -550,7 +550,7 @@ def get_images_cached(source, project_id, token,):
         s_t = "true"
     else:
         s_t = 'false'
-    url = f'http://104.32.236.233:8080/images/images?source={s_t}&project_id={project_id}'
+    url = f'http://104.32.236.233:8080/images/oneimage?source={s_t}&project_id={project_id}'
     headers = {
         'accept': 'application/json',
         'Authorization': f'Bearer {token}'
@@ -560,13 +560,13 @@ def get_images_cached(source, project_id, token,):
     if response.status_code == 200:
         images = response.json()
         output=[]
-        images_bytes_list = images['files']
-        for i in images_bytes_list:
-            image_bytes = base64.b64decode(i)
-            img = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_UNCHANGED)
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            output.append(img)
-        return output
+        one_image = images['files']
+
+        image_bytes = base64.b64decode(one_image)
+        img = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_UNCHANGED)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        
+        return img
 
 @st.cache(allow_output_mutation=True)
 def create_overlay(selected_image, tl, tr, bl, br):
