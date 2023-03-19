@@ -58,7 +58,7 @@ def show_create_project_page():
 
         if project_name and source and target and spectrum:
             if st.button("Sumbit", key='submit' ):
-                url = 'http://127.0.0.1:8000/projects/'
+                url = 'http://104.32.236.233:8080/projects/'
                 headers = {
                     'accept': 'application/json',
                     'Authorization': f'Bearer {st.session_state["token"]}',
@@ -177,7 +177,7 @@ def show_open_projects_page():
 
 def GetLUT_Clicked(project_id):
 
-    url = f'http://127.0.0.1:8000/LUT/?project_id={project_id}'
+    url = f'http://104.32.236.233:8080/LUT/?project_id={project_id}'
     headers = {
         'accept': 'application/json',
         'Authorization': f'Bearer {st.session_state["token"]}',
@@ -202,7 +202,7 @@ def GetLUT_Clicked(project_id):
 
 def train_model(args):
     project_id, lutsize = args
-    url = f'http://127.0.0.1:8000/ml/?lut_size={lutsize}&project_id={project_id}'
+    url = f'http://104.32.236.233:8080/ml/?lut_size={lutsize}&project_id={project_id}'
     headers = {
         'accept': 'application/json',
         'Authorization': f'Bearer {st.session_state["token"]}',
@@ -226,7 +226,7 @@ def TrainModel_Clicked(project_id,lutsize):
 
 def send_files(files_name_bytes, source_target,):
     # Build the multipart/form-data request.
-    url = f'http://127.0.0.1:8000/images/?source={source_target}&project_id={st.session_state["project_id"]}'
+    url = f'http://104.32.236.233:8080/images/?source={source_target}&project_id={st.session_state["project_id"]}'
 
     headers = {"Content-Type": "application/json",
                'Authorization': f'Bearer {st.session_state["token"]}',
@@ -283,7 +283,7 @@ def show_load_files_page():
                 send_files(files_name_bytes, source_target)
         if st.button('reset image folders', key='reset_image_folder'):
             # Build the multipart/form-data request.
-            url = f'http://127.0.0.1:8000/images/?project_id={st.session_state["project_id"]}'
+            url = f'http://104.32.236.233:8080/images/?project_id={st.session_state["project_id"]}'
 
             headers = {
                        'Authorization': f'Bearer {st.session_state["token"]}',
@@ -338,7 +338,7 @@ def show_login_page():
 
 # Function to verify the user's credentials against the cloud SQL database
 def verify_credentials(username, password):
-    url = 'http://127.0.0.1:8000/token'
+    url = 'http://104.32.236.233:8080/token'
     headers = {
         'accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -494,7 +494,7 @@ def create_tab_data(s_t,chart_x,chart_y):
         source = 'true'
     else:
         source = 'false'
-    url = f'http://127.0.0.1:8000/data/?source={source}&chart_x={chart_x}&chart_y={chart_y}&project_id={st.session_state["project_id"]}'
+    url = f'http://104.32.236.233:8080/data/?source={source}&chart_x={chart_x}&chart_y={chart_y}&project_id={st.session_state["project_id"]}'
     headers = {"Content-Type": "application/json",
                'Authorization': f'Bearer {st.session_state["token"]}',
                 'accept': "application/json"}
@@ -523,7 +523,7 @@ def create_tab_data(s_t,chart_x,chart_y):
 
 def get_projects():
 
-    url = 'http://127.0.0.1:8000/projects/'
+    url = 'http://104.32.236.233:8080/projects/'
     headers = {
                     'accept': 'application/json',
                     'Authorization': f'Bearer {st.session_state["token"]}'
@@ -550,7 +550,7 @@ def get_images_cached(source, project_id, token,):
         s_t = "true"
     else:
         s_t = 'false'
-    url = f'http://127.0.0.1:8000/images/images?source={s_t}&project_id={project_id}'
+    url = f'http://104.32.236.233:8080/images/images?source={s_t}&project_id={project_id}'
     headers = {
         'accept': 'application/json',
         'Authorization': f'Bearer {token}'
@@ -606,7 +606,7 @@ def image_comparison():
             left_applied = np.array(left)
             bitdepth = left_applied.dtype.itemsize * 8
             left_applied = left_applied/bitdepth
-            url = f'http://127.0.0.1:8000/LUT/?project_id={st.session_state["project_id"]}'
+            url = f'http://104.32.236.233:8080/LUT/?project_id={st.session_state["project_id"]}'
             headers = {
                 'accept': 'application/json',
                 'Authorization': f'Bearer {st.session_state["token"]}',
